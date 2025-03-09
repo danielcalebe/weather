@@ -1,0 +1,36 @@
+import React from 'react';
+import { View, StyleSheet, Dimensions } from 'react-native';
+import Svg, { Circle } from 'react-native-svg';
+
+const { width, height } = Dimensions.get('window');
+const NUM_STARS = 50;
+
+const generateStars = () => {
+  return Array.from({ length: NUM_STARS }).map((_, i) => ({
+    cx: Math.random() * width,
+    cy: Math.random() * height,
+    r: Math.random() * 2 + 1, // Tamanho aleatório entre 1 e 3
+    opacity: Math.random() * 0.5 + 0.5, // Opacidade aleatória entre 0.5 e 1
+  }));
+};
+
+export function StarryBackground() {
+  const stars = generateStars();
+
+  return (
+    <View style={styles.container}>
+      <Svg height={height} width={width} style={StyleSheet.absoluteFill}>
+        {stars.map((star, index) => (
+          <Circle key={index} cx={star.cx} cy={star.cy} r={star.r} fill="white" opacity={star.opacity} />
+        ))}
+      </Svg>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#000020', // Cor do fundo do céu noturno
+  },
+});
